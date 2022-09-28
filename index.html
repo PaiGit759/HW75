@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>HW75</title>
+    <style type="text/css">
+        body {
+            background-color: rgb(150, 150, 202);
+        }
+
+        .exsample {
+            top: 5%;
+        }
+
+        .exsample1 {
+            top: 28%;
+        }
+
+        .exsample2 {
+            top: 16%;
+        }
+
+
+        .exsample1 {
+            position: relative;
+            left: 20%;
+            top: 50px;
+            width: 50%;
+            padding-top: 5px;
+            padding-left: 10px;
+            padding-bottom: 10px;
+            font-size: x-large;
+            margin-top: 5px;
+            text-align: justify;
+            background: lightgray;
+            border: 1px solid greenyellow;
+            border-radius: 3%;
+
+        }
+
+        .s1 {
+            color: rgb(235, 10, 10);
+        }
+
+        input {
+            width: 75%;
+            background-color: rgb(229, 125, 5);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="exsample1" id="formForOutPut" name="form1">
+        <label> Name </label>
+        <input type="text" id="name" value="Flyuia"><br>
+        <label> Country </label>
+        <input type="text" id="country" value="Ukrline"><br>
+        <label> Established </label>
+        <input type="number" id="established" value="1993"><br>
+        <label> Headquaters </label>
+        <input type="text" id="head_quaters" value="We are from Ukrain"><br>
+        <label> Id </label>
+        <input type="number" id="Id" value="999"><br>
+        <label> logo </label>
+        <input type="text" id="logo" value='https://www.flyuia.com/assets/img/header/logo-full-white-small.svg'><br>
+        <label> Slogan </label>
+        <input type="text" id="slogan" value="We are the best"><br>
+        <label> Website </label>
+        <input type="text" id="website" value="https://www.flyuia.com/hu/ru/home"><br>
+
+        <div>
+            <button id="btn1" onclick="onClicBtn1()">Add airline</button>
+        </div>
+
+        <p id='message' style="color: green;display: none;">The airline has been successfully added to the list of
+            airlines </p>
+    </div>
+
+    <script>
+        async function onClicBtn1() {
+
+
+            let airline = {
+                name: document.getElementById("name").value,
+                country: document.getElementById("country").value,
+                established: document.getElementById("established").value,
+                head_quaters: document.getElementById("head_quaters").value,
+                id: document.getElementById("Id").value,
+                logo: document.getElementById("logo").value,
+                slogan: document.getElementById("slogan").value,
+                website: document.getElementById("website").value
+            };
+
+
+            let url = 'https://api.instantwebtools.net/v1/airlines';// добавляет данные или не добавляет если они есть
+            // проверка на новизну идет по Id
+            //            let url = 'https://httpbin.org/post';
+
+            let response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(airline)
+            });
+
+            let result = await response.json();
+
+            if (response.ok) {
+                document.getElementById("message").style = 'display: block;color: green;';
+            }
+            else {
+                document.getElementById("message").innerHTML = result.message;
+                document.getElementById("message").style = 'display: block; color: red;';
+            };
+
+        }
+    </script>
+
+</body>
+
+</html>
